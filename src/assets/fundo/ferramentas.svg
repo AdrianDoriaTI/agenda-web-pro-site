@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="216" viewBox="0 0 600 216">
+  <!-- Fundo Agenda Web Pro: tesoura, pente, máquina, borrifador e navalha, realistas (contorno + partes preenchidas). Desenho próprio (2026-10-14),
+       no estilo de padrão denso e girado pedido pelo usuário. Ladrilho repetível 600×216; cor única (#000)
+       para ser usado como máscara CSS e colorido pelo tema. -->
+  <defs>
+    <!-- desfoque leve (1.5; era 1.3 na D32) -->
+    <filter id="d" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.5"/></filter>
+    <!-- Estilo: objeto real, traço fino, contorno + áreas preenchidas (lâmina, dentes, tampa). -->
+    <!-- Tesoura aberta: duas lâminas cruzadas, pino, argolas e apoio de dedo -->
+    <g id="tesoura">
+      <path d="M-3 5C-6-14-9-30-13-44Q-9-42-6-34L3-4"/>
+      <path d="M3 5C6-14 9-30 13-44Q9-42 6-34L-3-4"/>
+      <circle r="1.6" fill="#000"/>
+      <path d="M-3 5L-8 15M3 5L8 15"/>
+      <ellipse cx="-11" cy="23" rx="7" ry="8.5"/>
+      <ellipse cx="11" cy="23" rx="7" ry="8.5"/>
+      <path d="M17 29q5 5 3 11"/>
+    </g>
+    <!-- Pente com cabo: cabo longo e fino (~55%), cabeça ~2x mais larga com bloco de dentes finos abertos na ponta -->
+    <g id="pente">
+      <path d="M-1-4V40.5Q-1 44-4 44Q-7 44-7 40.5V-41.5Q-7-44-4.5-44H-3V-4Z"/>
+      <path d="M-3-4H7"/>
+      <g fill="#000" stroke="none"><rect x="-3" y="-43.6" width="10" height="1.5" rx=".3"/><rect x="-3" y="-41.0" width="10" height="1.5" rx=".3"/><rect x="-3" y="-38.4" width="10" height="1.5" rx=".3"/><rect x="-3" y="-35.8" width="10" height="1.5" rx=".3"/><rect x="-3" y="-33.2" width="10" height="1.5" rx=".3"/><rect x="-3" y="-30.6" width="10" height="1.5" rx=".3"/><rect x="-3" y="-28.0" width="10" height="1.5" rx=".3"/><rect x="-3" y="-25.4" width="10" height="1.5" rx=".3"/><rect x="-3" y="-22.8" width="10" height="1.5" rx=".3"/><rect x="-3" y="-20.2" width="10" height="1.5" rx=".3"/><rect x="-3" y="-17.6" width="10" height="1.5" rx=".3"/><rect x="-3" y="-15.0" width="10" height="1.5" rx=".3"/><rect x="-3" y="-12.4" width="10" height="1.5" rx=".3"/><rect x="-3" y="-9.8" width="10" height="1.5" rx=".3"/><rect x="-3" y="-7.2" width="10" height="1.5" rx=".3"/></g>
+    </g>
+    <!-- Máquina de cortar: corpo afunilado (mais largo na lâmina), lâmina como bloco preenchido de dentes -->
+    <g id="maquina">
+      <path d="M-15 -36V-42.5L-13.75 -45L-12.5 -42.5L-11.25 -45L-10 -42.5L-8.75 -45L-7.5 -42.5L-6.25 -45L-5 -42.5L-3.75 -45L-2.5 -42.5L-1.25 -45L0 -42.5L1.25 -45L2.5 -42.5L3.75 -45L5 -42.5L6.25 -45L7.5 -42.5L8.75 -45L10 -42.5L11.25 -45L12.5 -42.5L13.75 -45L15 -42.5V-36Z" fill="#000" stroke="none"/>
+      <path d="M-16-35H16L15.2-25H-15.2Z"/>
+      <path d="M-15.2-25L-10.5 38Q-10 45 0 45Q10 45 10.5 38L15.2-25"/>
+      <path d="M-14.4-15H14.4M-11 30H11"/>
+      <rect x="-1.4" y="-10" width="2.8" height="9" rx="1" fill="#000" stroke="none"/>
+    </g>
+    <!-- Borrifador: frasco com ombro, rótulo, tampa, cabeça com gatilho e bico, splash -->
+    <g id="borrifador">
+      <path d="M-12 44H12Q14 44 14 41V5Q14-2 7-4H-7Q-14-2-14 5V41Q-14 44-12 44Z"/>
+      <path d="M-14 13H14M-14 31H14"/>
+      <rect x="-6" y="-12" width="12" height="8" rx="1" fill="#000" stroke="none"/>
+      <path d="M-6-12V-24Q-6-28-2-28H13L17-25.5V-22H6V-12"/>
+      <rect x="16.5" y="-26.2" width="3.4" height="3.4" fill="#000" stroke="none"/>
+      <path d="M4-22Q-1-17-3.5-9"/>
+      <path d="M23-24.5h5M23-27.5l4.2-3.4M23-21.5l4.2 3.4"/>
+      <circle cx="31" cy="-29" r=".7" fill="#000" stroke="none"/><circle cx="31.5" cy="-20" r=".7" fill="#000" stroke="none"/>
+    </g>
+    <!-- Navalha clássica aberta: lâmina reta (dorso preenchido, fio visível), pino e cabo em ângulo -->
+    <g id="navalha">
+      <path d="M-3 3V-40Q-3-46 3-46H9Q10.5-46 10.5-44V-6Q10.5 1 3 3Z"/>
+      <path d="M-3-40V3H-1V-40Z" fill="#000" stroke="none"/>
+      <path d="M7.6-43.5V-6"/>
+      <g transform="rotate(32)">
+        <rect x="-4" y="-2.5" width="8" height="47" rx="3"/>
+        <path d="M0 6V36"/>
+        <circle cx="0" cy="40" r="1.1" fill="#000" stroke="none"/>
+      </g>
+      <circle r="1.7" fill="#000"/>
+    </g>
+  </defs>
+  <!-- grade hexagonal (2 fileiras de 5); quem passa da borda se repete do outro lado para o ladrilho emendar -->
+  <g fill="none" stroke="#000" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" filter="url(#d)">
+    <!-- tesoura -->
+    <use href="#tesoura" xlink:href="#tesoura" transform="translate(60 54) rotate(-38) scale(1.04)"/>
+    <use href="#tesoura" xlink:href="#tesoura" transform="translate(60 270) rotate(-38) scale(1.04)"/>
+    <!-- maquina -->
+    <use href="#maquina" xlink:href="#maquina" transform="translate(180 54) rotate(30) scale(1.04)"/>
+    <use href="#maquina" xlink:href="#maquina" transform="translate(180 270) rotate(30) scale(1.04)"/>
+    <!-- pente -->
+    <use href="#pente" xlink:href="#pente" transform="translate(300 54) rotate(-50) scale(1.04)"/>
+    <use href="#pente" xlink:href="#pente" transform="translate(300 270) rotate(-50) scale(1.04)"/>
+    <!-- borrifador -->
+    <use href="#borrifador" xlink:href="#borrifador" transform="translate(420 54) rotate(24) scale(1.04)"/>
+    <use href="#borrifador" xlink:href="#borrifador" transform="translate(420 270) rotate(24) scale(1.04)"/>
+    <!-- navalha -->
+    <use href="#navalha" xlink:href="#navalha" transform="translate(540 54) rotate(-30) scale(1.04)"/>
+    <use href="#navalha" xlink:href="#navalha" transform="translate(540 270) rotate(-30) scale(1.04)"/>
+    <!-- borrifador -->
+    <use href="#borrifador" xlink:href="#borrifador" transform="translate(0 -54) rotate(-26) scale(1.04)"/>
+    <use href="#borrifador" xlink:href="#borrifador" transform="translate(0 162) rotate(-26) scale(1.04)"/>
+    <use href="#borrifador" xlink:href="#borrifador" transform="translate(600 -54) rotate(-26) scale(1.04)"/>
+    <use href="#borrifador" xlink:href="#borrifador" transform="translate(600 162) rotate(-26) scale(1.04)"/>
+    <!-- navalha -->
+    <use href="#navalha" xlink:href="#navalha" transform="translate(120 -54) rotate(42) scale(1.04)"/>
+    <use href="#navalha" xlink:href="#navalha" transform="translate(120 162) rotate(42) scale(1.04)"/>
+    <!-- tesoura -->
+    <use href="#tesoura" xlink:href="#tesoura" transform="translate(240 -54) rotate(54) scale(1.04)"/>
+    <use href="#tesoura" xlink:href="#tesoura" transform="translate(240 162) rotate(54) scale(1.04)"/>
+    <!-- maquina -->
+    <use href="#maquina" xlink:href="#maquina" transform="translate(360 -54) rotate(-28) scale(1.04)"/>
+    <use href="#maquina" xlink:href="#maquina" transform="translate(360 162) rotate(-28) scale(1.04)"/>
+    <!-- pente -->
+    <use href="#pente" xlink:href="#pente" transform="translate(480 -54) rotate(46) scale(1.04)"/>
+    <use href="#pente" xlink:href="#pente" transform="translate(480 162) rotate(46) scale(1.04)"/>
+  </g>
+</svg>

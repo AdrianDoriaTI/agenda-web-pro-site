@@ -1,0 +1,60 @@
+---
+// Moldura de celular (DESIGN §5.3). A tela é desenhada numa base virtual de 390 × 844
+// e reduzida para caber na moldura; o zoom de cada etapa acontece dentro da tela.
+// A largura vem de --pw (definida por quem usa o componente).
+interface Props { label?: string }
+const { label = 'Barbearia Exemplo · dados fictícios' } = Astro.props;
+---
+<figure class="phone-fig">
+  <div class="phone">
+    <div class="phone-screen" aria-hidden="true">
+      <div class="phone-vp" data-fit-vp data-w="390">
+        <slot />
+        <div class="phone-status"><span class="tnum">9:41</span><span class="phone-icons"><i></i><i></i></span></div>
+      </div>
+      <span class="phone-island"></span>
+    </div>
+  </div>
+  <figcaption class="phone-cap t-label"><i></i>{label}</figcaption>
+</figure>
+
+<script>
+  import '../../scripts/fit';
+</script>
+
+<style>
+  .phone-fig { display: flex; flex-direction: column; align-items: center; gap: 14px; margin: 0; }
+  .phone {
+    --pw: var(--phone-w, 230px);
+    position: relative; width: var(--pw); aspect-ratio: 9 / 19.5; flex: none;
+    padding: calc(var(--pw) * 0.035);
+    border-radius: calc(var(--pw) * 0.15);
+    background: var(--phone-bezel);
+    box-shadow: 0 0 0 1px var(--phone-ring), var(--shadow-phone);
+  }
+  .phone-screen {
+    position: relative; width: 100%; height: 100%; overflow: hidden;
+    border-radius: calc(var(--pw) * (0.15 - 0.035));
+    background: var(--raised); color: var(--ink);
+    isolation: isolate;
+  }
+  .phone-vp {
+    --s: 0.555;
+    position: absolute; top: 0; left: 0; width: 390px; height: 844px;
+    transform: scale(var(--s)); transform-origin: 0 0;
+  }
+  .phone-island {
+    position: absolute; z-index: 30; left: 50%; top: 1.6%; width: 28%; height: 2.6%;
+    transform: translateX(-50%); border-radius: 99px; background: var(--phone-bezel);
+  }
+  .phone-status {
+    position: absolute; z-index: 20; top: 0; left: 0; right: 0; height: 44px;
+    display: flex; align-items: center; justify-content: space-between; padding: 6px 30px 0 36px;
+    font-size: 15px; font-weight: 600; color: var(--ink-3); pointer-events: none;
+  }
+  .phone-icons { display: flex; gap: 5px; }
+  .phone-icons i { display: block; width: 17px; height: 11px; border-radius: 3px; background: currentColor; opacity: .8; }
+  .phone-icons i:first-child { width: 15px; clip-path: polygon(0 100%, 100% 0, 100% 100%); border-radius: 1px; }
+  .phone-cap { display: inline-flex; align-items: center; gap: 8px; color: var(--ink-3); font-size: var(--text-label); }
+  .phone-cap i { width: 6px; height: 6px; border-radius: 99px; background: var(--brown-soft); }
+</style>

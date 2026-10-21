@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+/* Tokens: ver DESIGN.md §7. Tema claro é o padrão (sem JS); escuro via [data-theme="dark"]. */
+
+:root {
+  color-scheme: light;
+  --bg:#ECE8E0; --sunk:#E4DFD6; --wash:#E6E1D8; --raised:#F4F1EB;
+  --ink:#0F0D0A; --ink-2:#3B352E; --ink-3:#575047;
+  --brown:#6A5B4A; --brown-soft:#A8998A; --brown-tint:#DDD6CA;
+  --line:#D1C9BC; --line-strong:#7E7569;
+  --btn-bg:#0F0D0A; --btn-bg-hover:#24201B; --btn-fg:#ECE8E0;
+  --ok:#3F6B4A; --warn:#8A5A12; --danger:#9A3B2E; --focus:#6A5B4A;
+  --phone-bezel:#1B1712; --phone-ring:transparent;
+  --shadow-soft:0 1px 0 rgb(23 20 17 / .04), 0 12px 32px -14px rgb(23 20 17 / .18);
+  --shadow-phone:0 40px 80px -32px rgb(23 20 17 / .38);
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg:#0A0908; --sunk:#050404; --wash:#12100E; --raised:#171410;
+  --ink:#EFEAE1; --ink-2:#B9B1A5; --ink-3:#948C80;
+  --brown:#BFAE98; --brown-soft:#857A6C; --brown-tint:#24201B;
+  --line:#2B261F; --line-strong:#6F675C;
+  --btn-bg:#EFEAE1; --btn-bg-hover:#D8D2C7; --btn-fg:#0A0908;
+  --ok:#8DBE98; --warn:#D9A94F; --danger:#E08E7E; --focus:#BFAE98;
+  --phone-bezel:#1A1713; --phone-ring:#4A4338;
+  --shadow-soft:none;
+  --shadow-phone:0 0 0 1px #4A4338, 0 40px 90px -40px rgb(0 0 0 / .9);
+}
+
+@theme inline {
+  --color-bg: var(--bg);         --color-sunk: var(--sunk);
+  --color-wash: var(--wash);     --color-raised: var(--raised);
+  --color-ink: var(--ink);       --color-ink-2: var(--ink-2);   --color-ink-3: var(--ink-3);
+  --color-brown: var(--brown);   --color-brown-soft: var(--brown-soft);  --color-brown-tint: var(--brown-tint);
+  --color-line: var(--line);     --color-line-strong: var(--line-strong);
+  --color-btn: var(--btn-bg);    --color-btn-hover: var(--btn-bg-hover); --color-btn-fg: var(--btn-fg);
+  --color-ok: var(--ok);         --color-warn: var(--warn);     --color-danger: var(--danger);
+  --color-focus: var(--focus);
+  --shadow-soft: var(--shadow-soft);  --shadow-phone: var(--shadow-phone);
+}
+
+@theme {
+  --font-display: "Bricolage Grotesque Variable", system-ui, sans-serif;
+  --font-body: "Barlow", system-ui, sans-serif;
+  --font-label: "Barlow Condensed", "Arial Narrow", sans-serif;
+
+  --text-display: clamp(2.5rem, 1.9rem + 2.8vw, 4.75rem);
+  --text-display--line-height: 1.02;
+  --text-h2: clamp(1.875rem, 1.5rem + 1.7vw, 3.25rem);
+  --text-h2--line-height: 1.08;
+  --text-h3: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
+  --text-h3--line-height: 1.15;
+  --text-lead: clamp(1.1875rem, 1.1rem + 0.3vw, 1.375rem);
+  --text-lead--line-height: 1.45;
+  /* Celular: 18 px (pedido do usuário: tópicos e legendas mais legíveis); a partir do tablet 17 px. */
+  --text-body: 1.125rem;  --text-body--line-height: 1.55;
+  --text-small: 0.9375rem; --text-small--line-height: 1.45;
+  --text-label: 0.8125rem; --text-label--line-height: 1;
+  --text-badge: 0.75rem;   --text-badge--line-height: 1;
+
+  --breakpoint-sm: 40rem;  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;  --breakpoint-xl: 80rem;
+
+  --radius-sm: 4px; --radius-md: 8px; --radius-lg: 14px; --radius-pill: 999px;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --duration-press: 100ms; --duration-fast: 150ms; --duration-base: 240ms;
+  --duration-reveal: 420ms; --duration-scene: 700ms;
+  /* Cenas: entrada e saída suaves (a curva in-out acima é brusca para câmera e zoom). */
+  --ease-scene: cubic-bezier(0.45, 0, 0.2, 1);
+}
+/* Tablet/computador: rótulos e números um pouco maiores (D29). */
+@media (min-width: 48rem) { :root { --text-body: 1.0625rem; --text-label: 0.9375rem; } }
+/* Celular: tudo um pouco maior (pedido do usuário, D28). Em 375 px: título principal ~44, título de
+   seção ~32, tópico 24, rótulo/número 14, texto 19, lead 20. A partir do tablet valem os de cima. */
+@media (max-width: 47.99rem) {
+  :root {
+    --text-display: clamp(2.75rem, 2.1rem + 2.8vw, 4.75rem);
+    --text-h2: clamp(2rem, 1.6rem + 1.7vw, 3.25rem);
+    --text-h3: 1.5rem;
+    --text-lead: 1.25rem;
+    --text-body: 1.1875rem;
+    --text-label: 0.875rem;
+  }
+}
+
+/* ---------- Base ---------- */
+html { scroll-behavior: smooth; scroll-padding-top: 72px; -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+p { text-wrap: pretty; max-width: 62ch; }
+h1, h2, h3 { text-wrap: balance; font-family: var(--font-display); color: var(--ink); }
+::selection { background: var(--brown-tint); color: var(--ink); }
+
+/* Fundo: tesoura, pente, máquina, borrifador e navalha, realistas (contorno fino + partes preenchidas), girados, em padrão denso, levemente desfocados e bem apagados (D35).
+   Desenho próprio em src/assets/fundo/ferramentas.svg, usado como máscara: a cor vem de --ink,
+   então o mesmo arquivo serve aos temas claro e escuro. */
+body { position: relative; isolation: isolate; }
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background-color: var(--ink);
+  -webkit-mask: url("../assets/fundo/ferramentas.svg") repeat 0 0 / 600px 216px;
+  mask: url("../assets/fundo/ferramentas.svg") repeat 0 0 / 600px 216px;
+  opacity: .085;
+}
+[data-theme="dark"] body::before { opacity: .105; }
+@media (max-width: 47.99rem) {
+  body::before { -webkit-mask-size: 492px 177px; mask-size: 492px 177px; opacity: .105; }
+  [data-theme="dark"] body::before { opacity: .115; }
+}
+
+.tnum { font-variant-numeric: tabular-nums lining-nums; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* Tipografia (DESIGN.md §3.1) */
+.t-display { font-size: var(--text-display); line-height: 1.02; font-weight: 700; font-stretch: 92%; letter-spacing: -0.025em; }
+.t-h2 { font-size: var(--text-h2); line-height: 1.08; font-weight: 700; font-stretch: 96%; letter-spacing: -0.02em; }
+.t-h3 { font-size: var(--text-h3); line-height: 1.15; font-weight: 600; font-stretch: 100%; letter-spacing: -0.01em; }
+.t-lead { font-size: var(--text-lead); line-height: 1.45; color: var(--ink-2); }
+.t-small { font-size: var(--text-small); line-height: 1.45; }
+.t-label {
+  font-family: var(--font-label); font-size: var(--text-label); line-height: 1; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.14em;
+}
+.t-badge {
+  font-family: var(--font-label); font-size: var(--text-badge); line-height: 1; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.12em;
+}
+
+/* Layout */
+.wrap { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: 20px; }
+@media (min-width: 48rem) { .wrap { padding-inline: 32px; } }
+@media (min-width: 64rem) { .wrap { padding-inline: 48px; } }
+.section { padding-block: 80px; }
+@media (min-width: 48rem) { .section { padding-block: 112px; } }
+@media (min-width: 64rem) { .section { padding-block: 144px; } }
+
+/* ---------- Botões (DESIGN.md §5.1) ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding-inline: 24px; border-radius: var(--radius-md);
+  font-family: var(--font-body); font-size: 1rem; font-weight: 600; line-height: 1;
+  text-decoration: none; cursor: pointer; border: 1px solid transparent;
+  transition: background-color 140ms var(--ease-out), transform var(--duration-press) var(--ease-out);
+}
+.btn svg { flex: none; transition: transform 140ms var(--ease-out); }
+.btn:active { transform: scale(0.97); }
+.btn-sm { min-height: 44px; padding-inline: 16px; }
+.btn-primary { background: var(--btn-bg); color: var(--btn-fg); }
+.btn-secondary { background: transparent; color: var(--ink); border-color: var(--ink); }
+.btn-tertiary {
+  min-height: 44px; padding-inline: 2px; border-radius: 0; color: var(--ink);
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px;
+  text-decoration-color: var(--line-strong); transition: text-decoration-color 140ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--btn-bg-hover); }
+  .btn-primary:hover svg { transform: translateX(3px); }
+  .btn-secondary:hover { background: var(--brown-tint); }
+  .btn-tertiary:hover { text-decoration-color: var(--brown); }
+}
+
+/* Links de texto */
+.link { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: var(--line-strong); transition: text-decoration-color 140ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .link:hover { text-decoration-color: var(--brown); } }
+
+/* ---------- Cabeçalho ---------- */
+/* Barra flutuante "Liquid Glass": o conteúdo passa por baixo da barra, que é translúcida,
+   desfoca e satura o que está atrás, com borda de luz e brilho interno na borda superior. */
+.site-header { position: sticky; top: 0; z-index: 40; height: 0; }
+.glass-bar {
+  --glass-tint: rgb(244 241 235 / .22);
+  --glass-edge: rgb(255 255 255 / .55);
+  --glass-edge-dim: rgb(23 20 17 / .08);
+  --glass-shadow: 0 10px 30px -12px rgb(23 20 17 / .22);
+  position: absolute; top: 8px; left: 8px; right: 8px;
+  max-width: 1184px; margin-inline: auto;
+  height: 56px; padding-inline: 14px 8px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-radius: 20px;
+  background: var(--glass-tint);
+  border: 1px solid var(--glass-edge-dim);
+  box-shadow: inset 0 1px 0 var(--glass-edge), inset 0 -1px 0 rgb(255 255 255 / .12), var(--glass-shadow);
+  -webkit-backdrop-filter: blur(26px) saturate(1.9);
+  backdrop-filter: blur(26px) saturate(1.9);
+  transition: background-color 200ms var(--ease-out);
+}
+[data-theme="dark"] .glass-bar {
+  --glass-tint: rgb(23 20 16 / .2);
+  --glass-edge: rgb(255 255 255 / .16);
+  --glass-edge-dim: rgb(255 255 255 / .07);
+  --glass-shadow: 0 12px 34px -14px rgb(0 0 0 / .7);
+}
+.site-header[data-scrolled="true"] .glass-bar { --glass-tint: rgb(244 241 235 / .32); }
+[data-theme="dark"] .site-header[data-scrolled="true"] .glass-bar { --glass-tint: rgb(23 20 16 / .3); }
+/* Celulares bem estreitos (< 360 px): menos folga para a marca caber ao lado dos botões. */
+@media (max-width: 22.49rem) { .glass-bar { padding-inline: 12px 6px; } .glass-bar > .gap-3 { gap: 6px; } }
+@media (min-width: 48rem) { .glass-bar { top: 10px; height: 60px; padding-inline: 18px 10px; } }
+@media (min-width: 64rem) { .glass-bar { left: 24px; right: 24px; } }
+/* Sem suporte a backdrop-filter: fundo quase opaco para manter a legibilidade. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-bar, .site-header[data-scrolled="true"] .glass-bar { background: var(--bg); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .glass-bar, .site-header[data-scrolled="true"] .glass-bar { background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+
+/* ---------- Seletor de tema ---------- */
+.theme-toggle {
+  width: 44px; height: 44px; display: inline-grid; place-items: center; cursor: pointer;
+  border: 1px solid var(--line-strong); border-radius: var(--radius-pill); background: transparent; color: var(--ink);
+}
+.theme-toggle .i-moon { display: none; }
+[data-theme="dark"] .theme-toggle .i-sun { display: none; }
+[data-theme="dark"] .theme-toggle .i-moon { display: block; }
+@media (hover: hover) and (pointer: fine) { .theme-toggle:hover { background: var(--brown-tint); } }
+
+/* ---------- Movimento (DESIGN.md §6) ---------- */
+@keyframes hero-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.hero-in { animation: hero-in 480ms var(--ease-out) both; animation-delay: calc(var(--i, 0) * 80ms); }
+
+.js .reveal { opacity: 0; transform: translateY(10px); transition: opacity var(--duration-reveal) var(--ease-out), transform var(--duration-reveal) var(--ease-out); transition-delay: calc(var(--i, 0) * 60ms); }
+.js .reveal.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .hero-in, .js .reveal { opacity: 1; transform: none; animation: none; transition: none; }
+  .btn:active { transform: none; }
+  html { scroll-behavior: auto; }
+}

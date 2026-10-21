@@ -1,0 +1,31 @@
+---
+import Monogram from './Monogram.astro';
+import ActionButton from './ActionButton.astro';
+import { acaoWhatsapp, site } from '../config/site';
+const ano = new Date().getFullYear();
+---
+<footer style="background:var(--wash)">
+  <div class="wrap" style="padding-block:48px">
+    <div class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+      <div class="flex items-center gap-3">
+        <Monogram size={24} />
+        <span class="flex flex-col" style="gap:5px">
+          <span class="font-label uppercase font-semibold" style="font-size:12px;letter-spacing:0.18em;line-height:1">{site.nome}</span>
+          <span style="font-size:13px;line-height:1;color:var(--ink-3)">{site.descritor}</span>
+        </span>
+      </div>
+      <div class="flex flex-col gap-3 md:flex-row md:items-center md:gap-6">
+        <p class="t-small" style="color:var(--ink-2)">Quer tirar mais dúvidas sobre o sistema? Entre em contato pelo WhatsApp.</p>
+        <div class="flex flex-wrap items-center gap-4">
+          <ActionButton acao={acaoWhatsapp} variant="secondary" compact />
+          {site.sistemaVisivel && site.sistemaUrl && (
+            <a class="link" href={site.sistemaUrl} target="_blank" rel="noopener">Ver o sistema real</a>
+          )}
+        </div>
+      </div>
+    </div>
+    <p class="t-small" style="color:var(--ink-3);margin-top:32px">
+      A Barbearia Exemplo e os dados da demonstração são fictícios. © {ano} Adrian Doria.
+    </p>
+  </div>
+</footer>

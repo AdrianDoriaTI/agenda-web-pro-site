@@ -1,0 +1,249 @@
+---
+// Momento 2 — o barbeiro gerencia (DESIGN §5.4). Celular sempre; notebook ao lado a partir de lg.
+// Visual do painel real (capturas de 2026-10-09), só a visão do dono, com dados fictícios.
+import Scene from './Scene.astro';
+import Phone from './Phone.astro';
+import Laptop from './Laptop.astro';
+import { barbearia, horarios, hoje, agenda, financeiro, diasDemo, reais, milhar, momento2 } from '../../data/demo';
+import type { Atendimento } from '../../data/demo';
+
+const dias = diasDemo(new Date(), 6);
+const livres = horarios.length - agenda.ocupados.length - agenda.bloqueados.length;
+const maxSem = Math.max(...financeiro.semanas);
+const realizadoPct = Math.round((financeiro.realizado / financeiro.total) * 100);
+const brl = (v: number) => `R$ ${milhar(v)}`;
+const curto = (v: number) => (v >= 1000 ? `${(v / 1000).toLocaleString('pt-BR', { maximumFractionDigits: 1 })} mil` : String(v));
+const slotClass = (h: string) => (agenda.bloqueados.includes(h) ? 'slot blk' : agenda.ocupados.includes(h) ? 'slot busy' : 'slot');
+const slotTxt = (h: string) => (agenda.bloqueados.includes(h) ? `${h} bloq.` : h);
+const atend: Atendimento[] = [hoje.proximo, ...hoje.depois];
+---
+{/* Ícones da barra inferior e do WhatsApp */}
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-hoje" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-agenda" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-novo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-fin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 20v-6M12 20V6M18 20v-9"/></symbol>
+  <symbol id="i-mais" viewBox="0 0 24 24" fill="currentColor"><circle cx="5.5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18.5" cy="12" r="1.6"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.3z"/><path d="M9 9.2c.3 1.6 1.6 3.6 3.9 4.9l1.3-1.2 2 .9c-.2 1.2-1.1 1.9-2.3 1.8C10.6 15.2 8 12.4 7.7 9.8c-.1-1.2.6-2 1.8-2.2l.8 1.9z"/></symbol>
+</svg>
+
+<Scene
+  id="painel"
+  rotulo="Para você"
+  titulo="Como você gerencia"
+  lead="No celular ou no computador: o dia, a agenda e o financeiro da barbearia."
+  etapas={momento2}
+  aria="Demonstração: o painel do barbeiro (dados fictícios)"
+  zoom="1,1,1"
+  duo
+  zoomTopo
+>
+  <div class="pair">
+    {/* ---------- Notebook (lg+) ---------- */}
+    <div class="lapw">
+      <Laptop>
+        <div class="app">
+          <div class="pc">
+            <div class="pc-col">
+              <div class="pc-head glass">
+                <strong>{barbearia.nome}</strong>
+                <div class="seg">
+                  <span class="v-tab" data-from="1" data-to="1">Hoje</span>
+                  <span class="v-tab" data-from="2" data-to="2">Agenda</span>
+                  <span>Novo</span>
+                  <span class="v-tab" data-from="3" data-to="3">Financeiro</span>
+                  <span>Horários</span><span>Serviços</span><span>Equipe</span>
+                </div>
+              </div>
+            </div>
+            <div class="pc-scr">
+              {/* Hoje */}
+              <div class="fade pc-pane" data-to="1">
+                <div class="pc-body page" data-page data-vis="0,452">
+                  <div class="kpis" style="max-width:340px">
+                    <div class="kpi"><b>{hoje.atendimentos}</b><span>atendimentos hoje</span></div>
+                    <div class="kpi"><b>{reais(hoje.previsto)}</b><span>previsto hoje</span></div>
+                  </div>
+                  <p class="cap-s">Próximo · <span data-hoje-longo>hoje</span></p>
+                  <div class="appt next" data-focus="1" data-cam="top">
+                    <div class="appt-t"><b>{hoje.proximo.hora}</b><span class="tag">{hoje.proximo.origem}</span></div>
+                    <div><p class="appt-n">{hoje.proximo.nome}</p><p class="appt-d">{hoje.proximo.servico} · {reais(hoje.proximo.preco)} · com {hoje.proximo.barbeiro}</p><p class="appt-ph">{hoje.proximo.tel}</p></div>
+                    <span class="eta">{hoje.eta}</span>
+                    <div class="acts"><span class="obtn">Remarcar</span><span class="obtn red">Cancelar</span><span class="obtn wa"><svg><use href="#i-wa"/></svg>WhatsApp</span></div>
+                  </div>
+                  <p class="cap-s">Depois</p>
+                  {hoje.depois.map((a) => (
+                    <div class="appt">
+                      <div class="appt-t"><b>{a.hora}</b><span class:list={['tag', { man: a.origem === 'Manual' }]}>{a.origem}</span></div>
+                      <div><p class="appt-n">{a.nome}</p><p class="appt-d">{a.servico} · {reais(a.preco)} · com {a.barbeiro}</p>{a.tel && <p class="appt-ph">{a.tel}</p>}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Agenda */}
+              <div class="fade pc-pane" data-from="2" data-to="2">
+                <div class="pc-body page" data-page data-vis="0,452">
+                  <div class="days">
+                    {dias.map((d, i) => <span class:list={['day', { 'sel on': i === 1 }]} data-dia={i}><b>{d.rotulo}</b><small class="tnum">{d.data}</small></span>)}
+                  </div>
+                  <p class="a-meta" style="margin:14px 0 12px"><b>Amanhã</b> · {livres} horários livres</p>
+                  <div data-focus="2">
+                    <div class="slots">{horarios.map((h) => <span class={slotClass(h)}>{slotTxt(h)}</span>)}</div>
+                    <div class="legend"><span><i class="lg-free"></i>livre</span><span><i class="lg-busy"></i>ocupado</span><span><i class="lg-blk"></i>bloqueado</span></div>
+                    <div class="acts"><span class="obtn">Bloquear horários</span><span class="obtn">Fechar o dia</span><span class="obtn">Bloquear período</span></div>
+                  </div>
+                </div>
+              </div>
+              {/* Financeiro */}
+              <div class="fade pc-pane" data-from="3">
+                <div class="pc-body page" data-page data-vis="0,452">
+                  <div class="seg"><span>Hoje</span><span>Esta semana</span><span class="on">Este mês</span><span>Mês passado</span><span>Escolher</span></div>
+                  <p class="f-per">{financeiro.periodo}</p>
+                  <p class="f-tot">{brl(financeiro.total)}</p>
+                  <p class="f-tot-l">total do período · exemplo</p>
+                  <div class="prog"><i style={`width:${realizadoPct}%`}></i></div>
+                  <div class="prog-l"><span>Realizado {brl(financeiro.realizado)}</span><span>A realizar {brl(financeiro.aRealizar)}</span></div>
+                  <div class="kpis k3" style="margin-top:14px">
+                    <div class="kpi"><b>{financeiro.atendimentos}</b><span>atendimentos</span></div>
+                    <div class="kpi"><b>{brl(financeiro.comissoes)}</b><span>comissões</span></div>
+                    <div class="kpi"><b>{brl(financeiro.barbearia)}</b><span>fica na barbearia</span></div>
+                  </div>
+                  <div data-focus="3">
+                    <p class="cap-s">Por barbeiro</p>
+                    {financeiro.barbeiros.map((b) => (
+                      <div class="barb">
+                        <b>{brl(b.total)}</b>
+                        <div>
+                          <p class="barb-n">{b.nome}{b.responsavel && <small>responsável</small>}</p>
+                          <p class="barb-d">{b.atendimentos} atendimentos · comissão {b.comissao}% = {brl(Math.round((b.total * b.comissao) / 100))} · barbearia {brl(b.total - Math.round((b.total * b.comissao) / 100))}</p>
+                          <div class="split"><i style={`width:${b.comissao}%`}></i></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Laptop>
+    </div>
+
+    {/* ---------- Celular ---------- */}
+    <div class="phw">
+      <Phone>
+        <div class="app">
+          <div class="app-head glass"><strong>{barbearia.nome}</strong></div>
+
+          {/* Hoje */}
+          <div class="scr fade" data-to="1" style="background:transparent">
+            <div class="page" data-page data-vis="104,730">
+              <div class="kpis">
+                <div class="kpi"><b>{hoje.atendimentos}</b><span>atendimentos hoje</span></div>
+                <div class="kpi"><b>{reais(hoje.previsto)}</b><span>previsto hoje</span></div>
+              </div>
+              <p class="cap-s">Próximo · <span data-hoje-longo>hoje</span></p>
+              <div class="appt next" data-focus="1" data-cam="top">
+                <div class="appt-t"><b>{hoje.proximo.hora}</b><span class="tag">{hoje.proximo.origem}</span></div>
+                <div><p class="appt-n">{hoje.proximo.nome}</p><p class="appt-d">{hoje.proximo.servico} · {reais(hoje.proximo.preco)} · com {hoje.proximo.barbeiro}</p><p class="appt-ph">{hoje.proximo.tel}</p></div>
+                <span class="eta">{hoje.eta}</span>
+                <div class="acts"><span class="obtn">Remarcar</span><span class="obtn red">Cancelar</span><span class="obtn wa"><svg><use href="#i-wa"/></svg>WhatsApp</span></div>
+              </div>
+              <p class="cap-s">Depois</p>
+              {atend.slice(1).map((a) => (
+                <div class="appt">
+                  <div class="appt-t"><b>{a.hora}</b><span class:list={['tag', { man: a.origem === 'Manual' }]}>{a.origem}</span></div>
+                  <div><p class="appt-n">{a.nome}</p><p class="appt-d">{a.servico} · {reais(a.preco)} · com {a.barbeiro}</p>{a.tel && <p class="appt-ph">{a.tel}</p>}</div>
+                  <div class="acts"><span class="obtn">Remarcar</span><span class="obtn red">Cancelar</span>{a.tel && <span class="obtn wa"><svg><use href="#i-wa"/></svg>WhatsApp</span>}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Agenda */}
+          <div class="scr fade" data-from="2" data-to="2" style="background:transparent">
+            <div class="page" data-page data-vis="104,730">
+              <div class="days">
+                {dias.map((d, i) => <span class:list={['day', { 'sel on': i === 1 }]} data-dia={i}><b>{d.rotulo}</b><small class="tnum">{d.data}</small></span>)}
+              </div>
+              <div class="days-bar"><i></i></div>
+              <p class="a-meta" style="margin:16px 0 12px"><b>Amanhã</b> · {livres} horários livres</p>
+              <div class="kpis">
+                <div class="kpi"><b>{agenda.ocupados.length}</b><span>atendimentos</span></div>
+                <div class="kpi"><b>{reais(agenda.previsto)}</b><span>previsto no dia</span></div>
+              </div>
+              <div data-focus="2" style="margin-top:16px">
+                <div class="slots">{horarios.map((h) => <span class={slotClass(h)}>{slotTxt(h)}</span>)}</div>
+                <div class="legend"><span><i class="lg-free"></i>livre</span><span><i class="lg-busy"></i>ocupado</span><span><i class="lg-blk"></i>bloqueado</span></div>
+                <div class="acts"><span class="obtn">Bloquear horários</span><span class="obtn">Fechar o dia</span></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Financeiro */}
+          <div class="scr fade" data-from="3" style="background:transparent">
+            <div class="page" data-page data-vis="104,730">
+              <div class="seg-wrap"><div class="seg"><span>Hoje</span><span>Esta semana</span><span class="on">Este mês</span><span>Mês passado</span></div></div>
+              <p class="f-per">{financeiro.periodo}</p>
+              <p class="f-tot">{brl(financeiro.total)}</p>
+              <p class="f-tot-l">total do período · exemplo</p>
+              <div class="prog"><i style={`width:${realizadoPct}%`}></i></div>
+              <div class="prog-l"><span>Realizado {brl(financeiro.realizado)}</span><span>A realizar {brl(financeiro.aRealizar)}</span></div>
+              <div class="kpis k3" style="margin-top:14px">
+                <div class="kpi"><b>{financeiro.atendimentos}</b><span>atendimentos</span></div>
+                <div class="kpi"><b>{brl(financeiro.comissoes)}</b><span>comissões</span></div>
+                <div class="kpi"><b>{brl(financeiro.barbearia)}</b><span>fica na barbearia</span></div>
+              </div>
+              <p class="cap-s">Por semana</p>
+              <div class="bars">
+                {financeiro.semanas.map((v) => <div class="bar"><span>{curto(v)}</span><i style={`height:${Math.round((v / maxSem) * 100)}px`}></i></div>)}
+              </div>
+              <div class="bars-l">{financeiro.semanas.map((_, i) => <span>Sem {i + 1}</span>)}</div>
+              <div data-focus="3">
+                <p class="cap-s">Por barbeiro</p>
+                {financeiro.barbeiros.map((b) => (
+                  <div class="barb">
+                    <b>{brl(b.total)}</b>
+                    <div>
+                      <p class="barb-n">{b.nome}{b.responsavel && <small>responsável</small>}</p>
+                      <p class="barb-d">{b.atendimentos} atendimentos · comissão {b.comissao}% = {brl(Math.round((b.total * b.comissao) / 100))}</p>
+                      <div class="split"><i style={`width:${b.comissao}%`}></i></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <nav class="nav glass">
+            <span class="v-tab" data-from="1" data-to="1"><svg><use href="#i-hoje"/></svg>Hoje</span>
+            <span class="v-tab" data-from="2" data-to="2"><svg><use href="#i-agenda"/></svg>Agenda</span>
+            <span class="plus"><svg><use href="#i-novo"/></svg>Novo</span>
+            <span class="v-tab" data-from="3" data-to="3"><svg><use href="#i-fin"/></svg>Financeiro</span>
+            <span><svg><use href="#i-mais"/></svg>Mais</span>
+          </nav>
+        </div>
+      </Phone>
+    </div>
+  </div>
+</Scene>
+
+<style>
+  .pair { display: flex; align-items: flex-end; justify-content: center; }
+  @media (min-width: 64rem) { .pair { justify-content: flex-end; width: 100%; } }
+  .lapw { display: none; }
+  @media (min-width: 64rem) {
+    .lapw { display: block; margin-bottom: 34px; }
+    .phw { position: relative; z-index: 1; margin-left: calc(var(--phone-w) * -0.32); }
+  }
+
+  /* telas do notebook: cabeçalho fixo em cima, conteúdo troca embaixo */
+  .pc-scr { position: absolute; left: 0; right: 0; top: 136px; bottom: 0; }
+  .pc-pane { position: absolute; inset: 0; width: 720px; margin: 0 auto; overflow: hidden; }
+  .pc-pane .page { position: absolute; top: 0; left: 0; right: 0; padding: 18px; }
+  .seg-wrap { overflow: hidden; -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); }
+
+  /* aba ativa (Hoje / Agenda / Financeiro) acompanha a etapa */
+  .v-tab.on { color: var(--ink); }
+  .seg .v-tab.on { background: var(--ink); color: var(--bg); }
+</style>

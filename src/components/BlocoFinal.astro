@@ -1,0 +1,63 @@
+---
+// Plano + cadastro (fim da página). Este site vende só o Plano Essencial (D31):
+// cadastro direto com teste grátis.
+import ActionButton from './ActionButton.astro';
+import { acaoPrimaria, site } from '../config/site';
+
+const dias = site.testeGratisDias;
+const essencial = [
+  'Agenda online com o link da sua barbearia',
+  'Painel no celular e no computador',
+  'Horários, serviços e equipe',
+  'Financeiro com comissão por barbeiro',
+];
+---
+<section id="planos" class="section" aria-labelledby="final-titulo">
+  <div class="wrap final">
+    <div class="final-txt">
+    <p class="t-label reveal" style="color:var(--brown)">Plano</p>
+    <h2 id="final-titulo" class="t-h2 reveal" style="--i:1;margin-top:16px;max-width:18ch">Sua barbearia funcionando ainda hoje</h2>
+    <p class="t-lead reveal" style="--i:2;margin-top:16px;max-width:40ch">
+      Em poucos minutos você cadastra os serviços, os horários e a equipe, e já sai com o link de agendamento e o painel.
+    </p>
+    </div>
+
+    <div class="plans">
+      <article class="plan main reveal" aria-labelledby="p-ess">
+        <p class="t-label" style="color:var(--brown)">Plano Essencial</p>
+        <p class="price" id="p-ess"><span class="tnum">R$ {site.precoEssencial}</span><small>por mês</small></p>
+        {dias > 0 && <p class="trial">{dias} dias grátis, sem cartão</p>}
+        <ul class="incl">
+          {essencial.map((i) => <li>{i}</li>)}
+        </ul>
+        <div class="plan-cta"><ActionButton acao={acaoPrimaria} /></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  #planos { padding-top: 48px; }
+  @media (min-width: 48rem) { #planos { padding-top: 72px; } }
+  .plans { display: grid; gap: 16px; margin-top: 40px; }
+  .plan { display: flex; flex-direction: column; padding: 24px 22px; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); background: var(--raised); box-shadow: var(--shadow-soft); }
+  .plan.main { border-color: var(--ink); border-width: 1.5px; }
+  .price { display: flex; align-items: baseline; gap: 8px; margin-top: 14px; }
+  .price span { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.25rem, 1.9rem + 1.4vw, 3rem); letter-spacing: -0.03em; line-height: 1; }
+  .price small { color: var(--ink-2); font-size: var(--text-small); }
+  .trial { margin-top: 10px; font-weight: 600; color: var(--ok); }
+  .incl { margin-top: 20px; display: grid; gap: 10px; }
+  .incl li { position: relative; padding-left: 20px; color: var(--ink-2); }
+  .incl li::before { content: ""; position: absolute; left: 0; top: .6em; width: 8px; height: 8px; background: var(--ink); }
+  .plan-cta { margin-top: auto; padding-top: 24px; }
+  @media (min-width: 48rem) {
+    .plans { margin-top: 56px; max-width: 448px; }
+    .plan { padding: 32px 30px; }
+  }
+  /* computador: texto à esquerda, cartão à direita, centralizados entre si */
+  @media (min-width: 64rem) {
+    .final { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 448px); gap: 64px; align-items: center; }
+    .plans { margin-top: 0; max-width: none; }
+  }
+  @media (min-width: 80rem) { .final { gap: 96px; } }
+</style>

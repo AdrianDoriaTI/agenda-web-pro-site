@@ -1,0 +1,36 @@
+<svg width="512" height="512" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Agenda Web Pro: A curvo (forma da referência do Adrian) + calendário do ícone atual. v1 corrigida: dobra contínua por trás do calendário, borda do calendário mais fina -->
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="70%"><stop offset="0" stop-color="#161616"/><stop offset="1" stop-color="#080808"/></radialGradient>
+    <linearGradient id="leg" gradientUnits="userSpaceOnUse" x1="300" y1="92" x2="150" y2="555"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c4c4c4"/></linearGradient>
+    <linearGradient id="fold" gradientUnits="userSpaceOnUse" x1="470" y1="110" x2="420" y2="330"><stop offset="0" stop-color="#9c9c9c"/><stop offset="1" stop-color="#5c5c5c"/></linearGradient>
+    <linearGradient id="bar" gradientUnits="userSpaceOnUse" x1="235" y1="470" x2="470" y2="420"><stop offset="0" stop-color="#5e5e5e"/><stop offset=".45" stop-color="#b9b9b9"/><stop offset="1" stop-color="#ededed"/></linearGradient>
+  </defs>
+  <rect width="128" height="128" fill="url(#bg)"/>
+  <g transform="translate(-1.7718 15.0658) scale(0.150336)">
+    <path d="M452 98Q462 104 468 116L640 436L640 540L520 520L456 392L380 228Z" fill="url(#fold)"/>
+    <path d="M291 370L425 370Q450 370 465 395L566 555L420 555Q405 555 395 538L370 492Q358 470 330 470L230 470Z" fill="url(#bar)"/>
+    <path d="M115 555Q72 555 70 515Q70 500 78 487L288 115Q302 92 330 92L438 92Q452 92 458 104L380 228L196 524Q182 555 150 555Z" fill="url(#leg)"/>
+    <rect x="520" y="290" width="290" height="269" rx="46" fill="#0c0c0c" stroke="#0c0c0c" stroke-width="40"/>
+    <path d="M566 290H764A46 46 0 0 1 810 336V356H520V336A46 46 0 0 1 566 290Z" fill="#f2f2f2"/>
+    <rect x="520" y="290" width="290" height="269" rx="46" fill="none" stroke="#f2f2f2" stroke-width="18.4"/>
+    <g stroke-linecap="round">
+      <line x1="600.6" y1="264.5" x2="600.6" y2="317.5" stroke="#0c0c0c" stroke-width="45"/>
+      <line x1="728" y1="264.5" x2="728" y2="317.5" stroke="#0c0c0c" stroke-width="45"/>
+      <line x1="600.6" y1="264.5" x2="600.6" y2="317.5" stroke="#f2f2f2" stroke-width="25.5"/>
+      <line x1="728" y1="264.5" x2="728" y2="317.5" stroke="#f2f2f2" stroke-width="25.5"/>
+    </g>
+    <rect x="568" y="382" width="35.4" height="35.4" rx="7" fill="#6b6b6b"/>
+    <rect x="621.7" y="382" width="35.4" height="35.4" rx="7" fill="#6b6b6b"/>
+    <rect x="675.5" y="382" width="35.4" height="35.4" rx="7" fill="#6b6b6b"/>
+    <rect x="729.2" y="382" width="35.4" height="35.4" rx="7" fill="#6b6b6b"/>
+    <rect x="568" y="434.5" width="35.4" height="35.4" rx="7" fill="#6b6b6b"/>
+    <rect x="621.7" y="434.5" width="35.4" height="35.4" rx="7" fill="#6b6b6b"/>
+    <rect x="675.5" y="434.5" width="35.4" height="35.4" rx="7" fill="#f2f2f2"/>
+    <path d="M683.5 453.0l7.8 7.8 12.7-16.3" fill="none" stroke="#111" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="729.2" y="434.5" width="35.4" height="35.4" rx="7" fill="#6b6b6b"/>
+    <rect x="568" y="486.6" width="35.4" height="35.4" rx="7" fill="#6b6b6b"/>
+    <rect x="621.7" y="486.6" width="35.4" height="35.4" rx="7" fill="#6b6b6b"/>
+    <rect x="675.5" y="486.6" width="35.4" height="35.4" rx="7" fill="#6b6b6b"/>
+  </g>
+</svg>

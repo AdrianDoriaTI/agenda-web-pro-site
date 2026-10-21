@@ -1,0 +1,36 @@
+---
+// Notebook simples (DESIGN §5.3, composição do momento 2): tela com moldura fina e base.
+// Sem reflexo, sem 3D. A tela é desenhada em base virtual 960 × 600 e reduzida para caber.
+// Largura vem de --lap-w (definida pelo palco).
+---
+<div class="lap" aria-hidden="true">
+  <div class="lap-lid">
+    <div class="lap-screen">
+      <div class="lap-vp" data-fit-vp data-w="960"><slot /></div>
+    </div>
+  </div>
+  <div class="lap-base"><i></i></div>
+</div>
+
+<script>
+  import '../../scripts/fit';
+</script>
+
+<style>
+  .lap { --lw: var(--lap-w, 520px); width: var(--lw); flex: none; }
+  .lap-lid {
+    padding: calc(var(--lw) * 0.022) calc(var(--lw) * 0.022) calc(var(--lw) * 0.03);
+    border-radius: calc(var(--lw) * 0.03) calc(var(--lw) * 0.03) 4px 4px;
+    background: var(--phone-bezel);
+    box-shadow: 0 0 0 1px var(--phone-ring);
+  }
+  .lap-screen { position: relative; aspect-ratio: 960 / 600; overflow: hidden; border-radius: 3px; background: var(--raised); color: var(--ink); isolation: isolate; }
+  .lap-vp { --s: 0.5; position: absolute; top: 0; left: 0; width: 960px; height: 600px; transform: scale(var(--s)); transform-origin: 0 0; }
+  .lap-base {
+    position: relative; height: calc(var(--lw) * 0.028); margin-inline: calc(var(--lw) * -0.06);
+    border-radius: 0 0 calc(var(--lw) * 0.03) calc(var(--lw) * 0.03);
+    background: color-mix(in srgb, var(--phone-bezel) 82%, var(--line-strong));
+    box-shadow: var(--shadow-phone);
+  }
+  .lap-base i { position: absolute; left: 50%; top: 0; width: 16%; height: 40%; transform: translateX(-50%); border-radius: 0 0 6px 6px; background: color-mix(in srgb, var(--phone-bezel) 60%, var(--line-strong)); }
+</style>

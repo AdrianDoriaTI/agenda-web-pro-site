@@ -1,0 +1,30 @@
+---
+import Lockup from './Lockup.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import ActionButton from './ActionButton.astro';
+import { acaoPrimaria, site, base } from '../config/site';
+---
+<header class="site-header" data-site-header>
+  <div class="glass-bar">
+    <Lockup />
+    <div class="flex items-center gap-3">
+      <nav class="hidden lg:flex items-center gap-8 mr-4" aria-label="Seções" style="font-weight:500">
+        <a class="link" style="text-decoration:none" href={`${base}#demonstracao`}>Demonstração</a>
+        <a class="link" style="text-decoration:none" href={`${base}#funcionalidades`}>Funcionalidades</a>
+        <a class="link" style="text-decoration:none" href={`${base}#planos`}>Plano</a>
+        {site.sistemaVisivel && site.sistemaUrl && (
+          <a class="btn btn-tertiary" href={site.sistemaUrl} target="_blank" rel="noopener">Ver o sistema real</a>
+        )}
+      </nav>
+      <ThemeToggle />
+      <ActionButton acao={acaoPrimaria} compact arrow={false} />
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
+  const update = () => header?.setAttribute('data-scrolled', String(window.scrollY > 4));
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+</script>

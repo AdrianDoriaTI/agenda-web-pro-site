@@ -1,0 +1,19 @@
+{
+  // Site de apresentação (Agenda Web Pro · Barbearias) como Worker de arquivos estáticos.
+  // Build: npm run build  ·  Deploy: npx wrangler deploy
+  // O sistema (Worker "agenda-web") usa Custom Domain no domínio inteiro; estas rotas rodam antes dele
+  // e ficam só com /site e /site/* (ver D25 em docs/arquitetura.md). O resto continua no sistema.
+  "name": "agenda-web-pro-site",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    { "pattern": "www.agendawebpro.com.br/site", "zone_name": "agendawebpro.com.br" },
+    { "pattern": "www.agendawebpro.com.br/site/*", "zone_name": "agendawebpro.com.br" },
+    { "pattern": "agendawebpro.com.br/site", "zone_name": "agendawebpro.com.br" },
+    { "pattern": "agendawebpro.com.br/site/*", "zone_name": "agendawebpro.com.br" }
+  ],
+  "assets": {
+    "directory": "./dist"
+  }
+}

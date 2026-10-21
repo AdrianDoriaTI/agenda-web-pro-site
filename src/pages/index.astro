@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ActionButton from '../components/ActionButton.astro';
+import Momento1 from '../components/demo/Momento1.astro';
+import Momento2 from '../components/demo/Momento2.astro';
+import Funcionalidades from '../components/Funcionalidades.astro';
+import DiaADia from '../components/DiaADia.astro';
+import BlocoFinal from '../components/BlocoFinal.astro';
+import { acaoPrimaria, acaoSecundaria, site } from '../config/site';
+---
+<Base
+  title="Agenda Web Pro — agenda online para barbearia"
+  description="Seu cliente agenda sozinho, pelo site, a qualquer hora. Você acompanha tudo em um painel simples. Veja o sistema funcionando."
+>
+  <Header />
+  <main>
+    <section class="wrap" style="padding-block:112px 80px" aria-labelledby="hero-titulo">
+      <p class="t-label hero-in" style="color:var(--brown);--i:0">Sistema para barbearias · Plano Essencial</p>
+      <h1 id="hero-titulo" class="t-display hero-in" style="--i:1;margin-top:20px;max-width:17ch">
+        Seu cliente faz o agendamento sozinho. Você só corta.
+      </h1>
+      <p class="t-lead hero-in" style="--i:2;margin-top:20px;max-width:36ch">
+        Ele escolhe barbeiro, dia, horário e serviço pelo site, a qualquer hora. Você acompanha tudo em um painel simples.
+      </p>
+      <div class="hero-in" style="--i:3;margin-top:32px;display:flex;flex-wrap:wrap;gap:12px">
+        <ActionButton acao={acaoPrimaria} />
+        {acaoSecundaria && <ActionButton acao={acaoSecundaria} variant="secondary" />}
+      </div>
+      {site.testeGratisDias > 0 && (
+        <p class="t-small hero-in" style="--i:4;margin-top:16px;color:var(--ink-2)">{site.testeGratisDias} dias grátis para testar, sem cartão.</p>
+      )}
+    </section>
+    <DiaADia />
+    <Momento1 />
+    <Momento2 />
+    <Funcionalidades />
+    <BlocoFinal />
+  </main>
+  <Footer />
+</Base>

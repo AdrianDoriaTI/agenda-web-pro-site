@@ -1,0 +1,30 @@
+---
+// Os pontos que pesam no dia a dia do barbeiro, logo depois do hero. Texto curto, sem exagero.
+import { diaADia } from '../data/conteudo';
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+<section id="dia-a-dia" class="dd" aria-labelledby="dd-titulo">
+  <div class="wrap">
+    <p class="t-label reveal" style="color:var(--brown)">No seu dia a dia</p>
+    <h2 id="dd-titulo" class="t-h2 reveal" style="--i:1;margin-top:16px;max-width:20ch">Menos tempo no WhatsApp, mais tempo na cadeira</h2>
+    <ol class="dd-list">
+      {diaADia.map((d, i) => (
+        <li class="dd-i reveal" style={`--i:${i % 3}`}>
+          <p class="t-label tnum" style="color:var(--brown)">{pad(i + 1)}</p>
+          <h3 class="dd-t">{d.titulo}</h3>
+          <p class="dd-x">{d.texto}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .dd { padding-block: 8px 0; }
+  .dd-list { display: grid; gap: 0 24px; margin-top: 36px; }
+  .dd-i { padding: 20px 0 24px; border-top: 1px solid var(--line); }
+  .dd-t { margin-top: 12px; font-size: var(--text-h3); line-height: 1.15; font-weight: 600; letter-spacing: -0.01em; }
+  .dd-x { margin-top: 8px; color: var(--ink-2); max-width: 42ch; }
+  @media (min-width: 48rem) { .dd-list { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 48px; } }
+  @media (min-width: 80rem) { .dd-list { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+</style>

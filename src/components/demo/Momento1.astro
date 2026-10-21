@@ -1,0 +1,125 @@
+---
+// Momento 1 — o cliente agenda (DESIGN §5.4). A tela segue o visual do sistema real.
+import Scene from './Scene.astro';
+import Phone from './Phone.astro';
+import { barbearia, barbeiros, servicos, horarios, ocupados, escolha, diasDemo, reais, momento1 } from '../../data/demo';
+
+const dias = diasDemo(new Date());
+const livres = horarios.length - ocupados.length;
+const serv = servicos.find((s) => s.nome === escolha.servico)!;
+const resumo = `Amanhã · ${escolha.hora} · ${serv.nome}`;
+---
+<Scene
+  id="demonstracao"
+  rotulo="Para o seu cliente"
+  titulo="Como o cliente agenda"
+  lead="Do link da barbearia ao horário marcado, sem trocar mensagem com você."
+  etapas={momento1}
+  aria="Demonstração: o cliente agenda (dados fictícios)"
+  zoom="1,1.06,1,1"
+>
+    <Phone>
+      <div class="app">
+        <!-- Tela: agendar -->
+        <div class="scr fade" data-scr data-to="3">
+          <div class="app-head glass">
+            <strong>{barbearia.nome}</strong>
+            <span class="pill glass">Meus agendamentos</span>
+          </div>
+          <div class="page" data-page>
+            <p class="a-h">Escolha seu horário</p>
+            <p class="a-sub">Toque em um horário livre, escolha o serviço e pronto.</p>
+            <p class="a-addr">
+              <span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg>{barbearia.localizacao}</span>
+              <span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/></svg>{barbearia.instagram}</span>
+            </p>
+
+            <div class="a-card">
+              <div class="a-step"><i>1</i>Com quem?</div>
+              <div class="a-chips">
+                <span class="chip sel on">Qualquer um</span>
+                {barbeiros.map((b) => <span class="chip">{b}</span>)}
+              </div>
+
+              <div class="a-sep"></div>
+              <div class="a-step"><i>2</i>Dia<em class="v" data-from="1">amanhã</em></div>
+              <div class="a-days" data-focus="1" data-cam="top">
+                <div class="days">
+                  {dias.map((d, i) => (
+                    <span class={i === escolha.diaIndex ? 'day sel' : 'day'} data-dia={i} {...(i === escolha.diaIndex ? { 'data-from': '1', 'data-tap': '1' } : {})}>
+                      <b>{d.rotulo}</b><small class="tnum">{d.data}</small>
+                    </span>
+                  ))}
+                </div>
+                <div class="days-bar"><i></i></div>
+              </div>
+
+              <div class="a-sep"></div>
+              <div data-focus="2">
+                <div class="a-step"><i>3</i>Horário<em class="v" data-from="2">{escolha.hora}</em></div>
+                <p class="a-meta"><b>{livres} horários livres</b> amanhã</p>
+                <div class="slots">
+                  {horarios.map((h) => ocupados.includes(h)
+                    ? <span class="slot busy">{h}</span>
+                    : <span class={h === escolha.hora ? 'slot sel' : 'slot'} {...(h === escolha.hora ? { 'data-from': '2', 'data-tap': '2' } : {})}>{h}</span>)}
+                </div>
+                <div class="legend"><span><i class="lg-free"></i>livre</span><span><i class="lg-busy"></i>ocupado</span></div>
+              </div>
+
+              <div class="a-sep"></div>
+              <div data-focus="3">
+                <div class="a-step"><i>4</i>Serviço<em class="v" data-from="3">{reais(serv.preco)}</em></div>
+                <div class="a-chips servs">
+                  {servicos.map((s) => (
+                    <span class={s.nome === serv.nome ? 'chip svc sel' : 'chip svc'} {...(s.nome === serv.nome ? { 'data-from': '3', 'data-tap': '3' } : {})}>
+                      {s.nome}<small class="tnum">{reais(s.preco)}{s.duracao && ` · ${s.duracao}`}</small>
+                    </span>
+                  ))}
+                </div>
+                <div class="a-sep"></div>
+                <div class="a-step"><i>5</i>Seu nome</div>
+                <div class="input">
+                  <span class="v ph" data-to="2">Como você quer ser chamado</span>
+                  <span class="v" data-from="3" data-delay="700">{escolha.cliente}</span>
+                </div>
+              </div>
+            </div>
+            <p class="a-foot">Na primeira vez, a confirmação é feita com uma mensagem pronta no WhatsApp.</p>
+          </div>
+
+          <div class="sumbar glass">
+            <div class="sum">
+              <span class="v" data-to="0"><b>Hoje</b><span>Falta: horário, serviço e seu nome</span></span>
+              <span class="v" data-from="1" data-to="1"><b>Amanhã</b><span>Falta: horário, serviço e seu nome</span></span>
+              <span class="v" data-from="2" data-to="2"><b>Amanhã · {escolha.hora}</b><span>Falta: serviço e seu nome</span></span>
+              <span class="v" data-from="3" data-delay="900"><b class="tnum">{resumo} · {reais(serv.preco)}</b><span>Pronto para reservar</span></span>
+            </div>
+            <span class="cta sel" data-from="3" data-delay="900" data-tap="3" data-tap-delay="1300">Reservar</span>
+          </div>
+        </div>
+
+        <!-- Tela: meus agendamentos -->
+        <div class="scr fade" data-scr data-from="4">
+          <div class="app-head glass">
+            <strong>{barbearia.nome}</strong>
+            <span class="pill glass">Novo agendamento</span>
+          </div>
+          <div class="page" data-page>
+            <p class="a-h">Meus agendamentos</p>
+            <p class="a-sub">Olá, {escolha.cliente}! Veja, remarque ou cancele seus horários.</p>
+            <div class="mine" data-focus="4">
+              <div class="mine-top">
+                <div class="mine-when"><b class="tnum">{escolha.hora}</b><small>amanhã</small></div>
+                <div><b class="mine-s">{serv.nome}</b><p class="mine-d tnum">com {escolha.barbeiro} · {reais(serv.preco)}</p></div>
+              </div>
+              <div class="acts">
+                <span class="obtn">Remarcar</span>
+                <span class="obtn red">Cancelar</span>
+              </div>
+            </div>
+            <p class="a-foot center">Este aparelho fica lembrado para os próximos agendamentos.</p>
+          </div>
+        </div>
+      </div>
+    </Phone>
+</Scene>

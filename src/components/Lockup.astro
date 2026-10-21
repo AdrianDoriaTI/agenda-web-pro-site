@@ -1,0 +1,20 @@
+---
+// Marca do produto no cabeçalho: símbolo do Agenda Web Pro (A curvo + calendário, v1 corrigida; mesmo
+// arquivo do favicon) + nome. A apresentação de Adrian Doria (monograma A+D) fica no rodapé.
+import { site, base } from '../config/site';
+---
+<a href={base} class="lockup inline-flex items-center text-ink no-underline" style="min-height:44px" aria-label={`${site.marca} ${site.segmento} — início`}>
+  <img class="lockup-icon" src={`${base}favicon.svg`} width="36" height="36" alt="" />
+  <span class="flex flex-col" style="gap:4px">
+    <span class="lockup-mark">{site.marca}</span>
+    <span class="lockup-seg">{site.segmento}</span>
+  </span>
+</a>
+
+<style>
+  .lockup { gap: 6px; }
+  .lockup-icon { width: 28px; height: 28px; border-radius: 6px; flex: none; }
+  .lockup-mark { font-family: var(--font-display); font-weight: 700; font-size: clamp(14px, 5vw - 3px, 20px); letter-spacing: -0.02em; line-height: 1; white-space: nowrap; }
+  .lockup-seg { font-family: var(--font-label); font-weight: 600; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; line-height: 1; color: var(--brown); }
+  @media (min-width: 48rem) { .lockup { gap: 12px; } .lockup-icon { width: 42px; height: 42px; border-radius: 10px; } .lockup-mark { font-size: 23px; } .lockup-seg { font-size: 14px; } }
+</style>
